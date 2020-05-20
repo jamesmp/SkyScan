@@ -2,6 +2,9 @@
 
 A work in progress application to track aircraft, celestial objects, and satellites using motorised telescope mounts.
 
+[Short Demo](https://youtu.be/BJrJFTBbw6k) - A short Youtube video demonstrating a live camera feed of the tracking process,
+The calibration process has not been performed for this video, as there are very few planes flying at the time of writing (Covid-19 2020)
+
 ## Getting Started
 
 The project was developed on python 3.7.1, it has not been tested on earlier versions. The python module dependencies are
