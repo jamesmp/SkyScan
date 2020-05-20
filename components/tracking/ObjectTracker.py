@@ -7,6 +7,8 @@ from ..tracking.Position import Position
 
 from collections import namedtuple
 
+import logging
+
 class ObjectTracker:
     """ Class to manage the real-time tracking of some 
     trackable object e.g. plane, star, satellite"""
@@ -77,6 +79,10 @@ class ObjectTracker:
             local_pos = self.local_coordinate_transformer.transform_to_local(obj_pos.as_tuple())
 
             obj_pos = Position(Position.TYPE_CARTESIAN, x=local_pos[0], y=local_pos[1], z=local_pos[2])
+
+        #TODO: convert Alt/Az coordinates into local cartesian, they need to be corrected by the solver too!
+        if (obj_pos.pos_type == Position.TYPE_ALTAZ):
+            pass
 
         return obj_pos
 
