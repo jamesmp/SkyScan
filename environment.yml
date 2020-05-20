@@ -1,0 +1,16 @@
+name: telescope
+channels:
+  - defaults
+  - conda-forge
+  - anaconda
+dependencies:
+  - scipy
+  - pyproj
+  - proj-datumgrid-europe
+  - proj-datumgrid-world
+  - proj-datumgrid-north-america
+  - proj-datumgrid-oceania
+  - requests
+  - flask
+prefix: F:\Anaconda3\envs\telescope
+
