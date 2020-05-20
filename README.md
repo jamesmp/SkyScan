@@ -44,9 +44,12 @@ python -m apps.TrackingApp.TrackingApp
 
 ## Built With
 
+* [Pyproj](https://github.com/pyproj4/pyproj) - For Lat/Long/h to Cartesian coordinate transforms
 * [SciPy](https://www.scipy.org/) - For coordinate transforms and calibration minimisation
 * [Flask](https://palletsprojects.com/p/flask/) - Web framework for ASCOM Alpaca integration
 * [PySide2](https://doc.qt.io/qtforpython/) - Official QT bindings for python for GUI
+* [Requests](https://requests.readthedocs.io/en/master/) - For all basic web requests
+
 
 ## Authors
 
