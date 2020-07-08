@@ -5,6 +5,7 @@ from ..TrackingApp.widgets.OffsetWidget import OffsetWidget
 from ..TrackingApp.widgets.CalibrationWidget import CalibrationWidget
 
 from ...components.aircraft.Dump1090Parser import Dump1090Parser
+from ...components.aircraft.FlightRadarParser import FlightRadarParser
 from ...components.aircraft.AircraftManager import AircraftManager
 from ...components.tracking.ObjectTracker import ObjectTracker
 from ...components.aircraft.TrackableAircraft import TrackableAircraft
@@ -97,7 +98,7 @@ class TrackingApp(QtWidgets.QMainWindow):
 		self.tracker.set_tracked_object(None)
 
 	def init_control(self):
-		self.parser = Dump1090Parser("127.0.0.1", 30003)
+		self.parser = FlightRadarParser(self.config["location"][0], self.config["location"][1], bound_range=1.0)#Dump1090Parser("127.0.0.1", 30003)
 		self.manager = AircraftManager(self.parser)
 
 		self.manager_thread = threading.Thread(target=self.manager.enter_update_loop, daemon=True)
