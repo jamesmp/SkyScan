@@ -16,6 +16,7 @@ from ...components.solver.MountModel import MountModel
 
 from ...components.celestial import AlpacaServer
 from ...components.celestial.TrackableCelestial import TrackableCelestial
+from ...components.satellite.TrackableSatellite import TrackableSatellite
 
 
 import threading
@@ -97,6 +98,15 @@ class TrackingApp(QtWidgets.QMainWindow):
 	def alpaca_deselect(self):
 		self.tracker.set_tracked_object(None)
 
+	@QtCore.Slot()
+	def satellite_select(self):
+		trackable = TrackableSatellite("http://127.0.0.1:5002/data/trackingdata")
+		self.tracker.set_tracked_object(trackable)
+
+	@QtCore.Slot()
+	def satellite_deselect(self):
+		self.tracker.set_tracked_object(None)
+
 	def init_control(self):
 		self.parser = FlightRadarParser(self.config["location"][0], self.config["location"][1], bound_range=1.0)#Dump1090Parser("127.0.0.1", 30003)
 		self.manager = AircraftManager(self.parser)
@@ -153,6 +163,9 @@ class TrackingApp(QtWidgets.QMainWindow):
 		self.load_cal_model_action.triggered.connect(lambda :self.load_model("cal"))
 		self.file_menu.addAction(self.load_cal_model_action)
 
+		#SEPARATOR
+		self.file_menu.addSeparator()
+
 		self.save_tracking_model_action = QtWidgets.QAction(text="Save Tracking Model", parent=self)
 		self.save_tracking_model_action.triggered.connect(lambda :self.save_model("track"))
 		self.file_menu.addAction(self.save_tracking_model_action)
@@ -168,6 +181,10 @@ class TrackingApp(QtWidgets.QMainWindow):
 		self.clear_planes_action.triggered.connect(self.clear_planes)
 		self.action_menu.addAction(self.clear_planes_action)
 
+		#SEPARATOR
+		self.action_menu.addSeparator()
+
+		#Alpaca Tracking
 		self.track_alpaca_action = QtWidgets.QAction(text="Track with Alpaca", parent=self)
 		self.track_alpaca_action.triggered.connect(self.alpaca_select)
 		self.action_menu.addAction(self.track_alpaca_action)
@@ -175,6 +192,18 @@ class TrackingApp(QtWidgets.QMainWindow):
 		self.untrack_alpaca_action = QtWidgets.QAction(text="Stop tracking with Alpaca", parent=self)
 		self.untrack_alpaca_action.triggered.connect(self.alpaca_deselect)
 		self.action_menu.addAction(self.untrack_alpaca_action)
+
+		#SEPARATOR
+		self.action_menu.addSeparator()
+
+		#Satellite Tracking
+		self.track_satellite_action = QtWidgets.QAction(text="Track with DDEBridge", parent=self)
+		self.track_satellite_action.triggered.connect(self.satellite_select)
+		self.action_menu.addAction(self.track_satellite_action)
+
+		self.untrack_satellite_action = QtWidgets.QAction(text="Stop tracking with DDEBridge", parent=self)
+		self.untrack_satellite_action.triggered.connect(self.satellite_deselect)
+		self.action_menu.addAction(self.untrack_satellite_action)
 
 		self.setMenuBar(self.menu_bar)
 

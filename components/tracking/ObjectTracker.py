@@ -80,9 +80,12 @@ class ObjectTracker:
 
             obj_pos = Position(Position.TYPE_CARTESIAN, x=local_pos[0], y=local_pos[1], z=local_pos[2])
 
-        #TODO: convert Alt/Az coordinates into local cartesian, they need to be corrected by the solver too!
         if (obj_pos.pos_type == Position.TYPE_ALTAZ):
-            pass
+            obj_pos = obj_pos.to_cartesian()
+
+            obj_pos.x *= 400000.0
+            obj_pos.y *= 400000.0
+            obj_pos.z *= 400000.0
 
         return obj_pos
 
@@ -108,9 +111,6 @@ class ObjectTracker:
         if (local_pos.pos_type == Position.TYPE_CARTESIAN):
             #Get unmodified AltAz
             alt, az = self.pointing_solver.get_point_altaz(local_pos.as_tuple())
-        elif (local_pos.pos_type == Position.TYPE_ALTAZ):
-            alt = local_pos.alt
-            az = local_pos.az
         else:
             raise RuntimeError("Unusable local position type")
 
